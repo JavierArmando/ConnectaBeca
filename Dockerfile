@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2-apache
 WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
@@ -12,5 +12,5 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 777 storage bootstrap/cache
 
-EXPOSE 9000
-CMD ["php-fpm"]
+EXPOSE 80
+CMD ["apache2-foreground"]
