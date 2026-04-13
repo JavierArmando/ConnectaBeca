@@ -1,12 +1,11 @@
 FROM php:8.2-apache
 WORKDIR /var/www/html
 
-# Instalar Git y Composer
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
 COPY . .
+
 RUN docker-php-ext-install pdo pdo_mysql
 RUN composer install --no-dev --optimize-autoloader
 
