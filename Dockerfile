@@ -11,8 +11,6 @@ RUN composer install --no-dev --optimize-autoloader
 
 RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html
-RUN php artisan key:generate
-RUN php artisan config:cache
 RUN chmod -R 777 storage bootstrap/cache
 
 EXPOSE 80
