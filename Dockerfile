@@ -1,14 +1,12 @@
 FROM php:8.2-apache
 WORKDIR /var/www/html
-COPY . .
 
-# Instalar Composer
+# Instalar Git y Composer
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Instalar dependencias de PHP
+COPY . .
 RUN docker-php-ext-install pdo pdo_mysql
-
-# Instalar dependencias del proyecto
 RUN composer install --no-dev --optimize-autoloader
 
 RUN a2enmod rewrite
